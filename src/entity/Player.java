@@ -60,7 +60,9 @@ public class Player {
 	public int getHeight() {
 		return height;
 	}
-
+	public int getHeadlessTime() {
+		return headlessTime;
+	}
 	public void setX(int x) {
 		this.x = x;
 	}
@@ -115,13 +117,13 @@ public class Player {
 	public void setWheelImg(BufferedImage img) {
 		this.wheelImg = img;
 	}
-	public Image getHeadImg() {
+	public BufferedImage getHeadImg() {
 		return state.getHeadImg();
 	}
-	public Image getBodyImg() {
+	public BufferedImage getBodyImg() {
 		return state.getBodyImg();
 	}
-	public Image getWheelImg() {
+	public BufferedImage getWheelImg() {
 		return state.getWheelImg();
 	}
 

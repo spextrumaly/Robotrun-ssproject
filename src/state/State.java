@@ -1,10 +1,10 @@
 package state;
-import java.awt.Image;
+import java.awt.image.BufferedImage;
 
 public interface State {
 	public void jump();
 	public void launchHead();
-	public Image getHeadImg();
-	public Image getBodyImg();
-	public Image getWheelImg();
+	public BufferedImage getHeadImg();
+	public BufferedImage getBodyImg();
+	public BufferedImage getWheelImg();
 }
