@@ -1,7 +1,7 @@
-package State;
+package state;
 import java.awt.Image;
 
-import Entity.Player;
+import entity.Player;
 import game.*;
 
 public class StateRun implements State {
@@ -16,11 +16,20 @@ public class StateRun implements State {
 	}
 	@Override
 	public void launchHead() {
-		
+		player.setHeadlessTime(100);
+		player.setState(new StateHeadless(player));
 	}
 	@Override
-	public Image getImg() {
-		return this.player.img;
+	public Image getHeadImg() {
+		return player.headImg;
+	}
+	@Override
+	public Image getBodyImg() {
+		return player.bodyImg;
+	}
+	@Override
+	public Image getWheelImg() {
+		return player.wheelImg;
 	}
 
 }

@@ -1,44 +1,40 @@
-package Entity;
+package entity;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.imageio.ImageIO;
 
-import State.*;
+import state.*;
 
 public class Player {
 
 	public static final int JUMP_SPEED = 10;
 	public static final int WIDTH = 30;
-	public static final int NORMAL_HEIGHT = 60;
-	public static final int CRAWL_HEIGHT = 30;
+	public static final int NORMAL_HEIGHT = 140;
 
 	private int x;
 	private int y;
 	private int vY;
 	private int width;
 	private int height;
+	private int headlessTime;
 	
 	private State state;
 	
-	public BufferedImage img;
+	public BufferedImage headImg = null;
+	public BufferedImage bodyImg = null;
+	public BufferedImage wheelImg = null;
 	
-	public Image headlessImg;
-
+	
 	public Player(int x, int y) {
 		this.x = x;
 		this.y = y;
 		this.width = WIDTH;
 		this.height = NORMAL_HEIGHT;
 		this.vY = 0;
+		this.headlessTime = 0;
 		state = new StateRun(this);
-		try {
-			 img = ImageIO.read(new File("C:/Users/ood/Desktop/spices/117.png"));
-			 headlessImg = ImageIO.read(new File("C:/Users/ood/Desktop/spices/117.png"));
-		} catch (Exception e) {
-			System.out.println(e);
-		}
 		
 	}
 	public void setState(State state) {
@@ -80,25 +76,53 @@ public class Player {
 		this.height = height;
 		
 	}
-
+	public void setHeadlessTime (int time) {
+		this.headlessTime = time;
+	}
 	public void jumpPressed() {
 		state.jump();
 	}
 
-	public void shootPressed() {
+	public void launchHeadPressed() {
 		state.launchHead();
 	}
 
 	public void update() {
 		vY--;
 		y += vY;
+		headlessTime--;
 		if (y<=0) {
 			y =0;
-			this.setState(new StateRun(this));
+			if (headlessTime <= 0)
+				this.setState(new StateRun(this));
+			else {
+				this.setState(new StateHeadless(this));
+			}
+		} else if (y>0) {
+			if(headlessTime <= 0) {
+				this.setState(new StateJump(this));
+			} else {
+				this.setState(new StateHeadlessJump(this));
+			}
 		}
 	}
-	public Image getImg() {
-		return state.getImg();
+	public void setHeadImg(BufferedImage img) {
+		this.headImg = img;
+	}
+	public void setBodyImg(BufferedImage img) {
+		this.bodyImg = img;
+	}
+	public void setWheelImg(BufferedImage img) {
+		this.wheelImg = img;
+	}
+	public Image getHeadImg() {
+		return state.getHeadImg();
+	}
+	public Image getBodyImg() {
+		return state.getBodyImg();
+	}
+	public Image getWheelImg() {
+		return state.getWheelImg();
 	}
 
 
