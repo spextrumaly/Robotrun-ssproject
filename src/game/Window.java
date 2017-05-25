@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Observable;
@@ -59,7 +61,19 @@ public class Window extends JFrame implements Observer {
 				height - (game.getPlayerY() + game.getPlayerHeight()+40), this);
 		g.drawImage(game.getWheelImg(), viewOffset + game.getPlayerX(),
 				height - (game.getPlayerY() + game.getPlayerHeight()), this);
+		
+		BufferedImage robotHead = game.getRobotHead().getHeadImg();
+		
+		double locationX = robotHead.getWidth() / 2;
+		double locationY = robotHead.getHeight() / 2;
+		AffineTransform tx = AffineTransform.getRotateInstance(game.getRobotHead().getAngle(), locationX, locationY);
+		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+		
+		
+		g.drawImage(op.filter(robotHead, null), viewOffset + game.getRobotHead().getX(),
+				height - (game.getRobotHead().getY()+ game.getPlayerHeight()+90), this);
 	}
+
 
 	public void start() {
 		game.start();

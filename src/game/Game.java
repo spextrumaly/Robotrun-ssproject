@@ -1,13 +1,11 @@
 package game;
-import java.awt.Graphics;
+
 import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
 import java.util.Observable;
 
-import javax.imageio.ImageIO;
 
 import entity.Player;
+import entity.RobotHead;
 
 public class Game extends Observable {
 
@@ -15,14 +13,17 @@ public class Game extends Observable {
 	public static final float GRAVITY = -600;
 	
 	private Player player;
+	private RobotHead robotHead;
 	private boolean running;
 	private Thread gameThread;
 	
 	public Game() {
 		player = new Player(0, 0);
+		robotHead = new RobotHead(player);
 	}
 	public Game(Player player) {
 		this.player = player;
+		robotHead = new RobotHead(player);
 	}
 	public void start() {
 		running = true;
@@ -45,6 +46,7 @@ public class Game extends Observable {
 	
 	private void singleFrame() {
 		player.update();
+		robotHead.update();
 		setChanged();
 		notifyObservers();
 	}
@@ -75,7 +77,9 @@ public class Game extends Observable {
 	public Player getPlayer() {
 		return this.player;
 	}
-	
+	public RobotHead getRobotHead() {
+		return this.robotHead;
+	}
 	public Image getHeadImg() {
 		return this.player.getHeadImg();
 	}

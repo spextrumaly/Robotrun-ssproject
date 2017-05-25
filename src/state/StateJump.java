@@ -1,8 +1,7 @@
 package state;
-import java.awt.Image;
+import java.awt.image.BufferedImage;
 
 import entity.Player;
-import game.*;
 
 public class StateJump implements State{
 	Player player;
@@ -20,15 +19,15 @@ public class StateJump implements State{
 		player.setState(new StateHeadless(player));
 	}
 	@Override
-	public Image getHeadImg() {
+	public BufferedImage getHeadImg() {
 		return player.headImg;
 	}
 	@Override
-	public Image getBodyImg() {
+	public BufferedImage getBodyImg() {
 		return player.bodyImg;
 	}
 	@Override
-	public Image getWheelImg() {
+	public BufferedImage getWheelImg() {
 		return player.wheelImg;
 	}
 }
